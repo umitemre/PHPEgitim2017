@@ -1,55 +1,66 @@
 <html>
     <head>
         <title>Benim İlk PHP Sayfam</title>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-    <form action="index.php" method="post">
-        <label for="name">Ad Soyadı</label>
-        <input type="text" name="name" /> <br>
+    <div class="kutumuz">
+        <form action="index.php" method="post">
+            <div class="satir">
+                <label for="name">Ad Soyadı</label>
+                <input type="text" id="name" name="name" />
+            </div>
 
-        <label for="email">E-posta</label>
-        <input type="text" name="email" /> <br>
+            <div class="satir">
+                <label for="email">E-posta</label>
+                <input type="text" id="email" name="email" />
+            </div>
 
-        <label for="mesaj">Mesaj</label>
-        <textarea name="mesaj"></textarea>
+            <div class="satir">
+                <label for="mesaj">Mesaj</label>
+                <textarea class="mesaj" name="mesaj"></textarea>
+            </div>
 
-        <input type="submit" value="Gönder" name="submit" />
-    </form>
-    </body>
-</html>
+            <div class="satir">
+                <input type="submit" value="Gönder" name="submit" />
+            </div>
+        </form>
+        <?php
+        require_once "app.php";
+        global $pdo;
 
-<?php
-    require_once "app.php";
-    global $pdo;
+        if(empty($_POST)) {
+            echo "Lütfen yukardaki alanları doldurun.";
+        } else {
+            if (strlen($_POST['name']) == 0 ||
+                strlen($_POST['email']) == 0 ||
+                strlen($_POST['mesaj']) == 0
+            ) {
 
-    if(empty($_POST)) {
-        echo "Lütfen yukardaki alanları doldurun.";
-    } else {
-        if (strlen($_POST['name']) == 0 ||
-            strlen($_POST['email']) == 0 ||
-            strlen($_POST['mesaj']) == 0
-        ) {
-
-            echo "Lütfen tüm bilgileri eksiksiz doldurun.";
-            var_dump($_POST);
-        }
-        else {
-            echo "Teşekkürler " . $_POST['name'] . "!";
-            echo "Mesajın gönderildi!";
+                echo "Lütfen tüm bilgileri eksiksiz doldurun.";
+                var_dump($_POST);
+            }
+            else {
+                echo "Teşekkürler " . $_POST['name'] . "!";
+                echo "Mesajın gönderildi!";
 
 
-            // her şey yolunda
-            $sql = $pdo->prepare("INSERT INTO iletisim (ad_soyad, eposta, mesaj) 
+                // her şey yolunda
+                $sql = $pdo->prepare("INSERT INTO iletisim (ad_soyad, eposta, mesaj) 
             VALUES (:ad_soyad, :email, :mesaj);");
 
-            $sql->execute(array(
+                $sql->execute(array(
                     ":ad_soyad" => $_POST['name'],
                     ":email" => $_POST['email'],
                     ":mesaj" => $_POST['mesaj']
-            ));
+                ));
+            }
         }
-    }
-?>
+        ?>
+    </div>
+    </body>
+</html>
+
 
 
 

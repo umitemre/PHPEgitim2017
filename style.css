@@ -1,0 +1,76 @@
+label {
+    float: left;
+    display: block;
+    width: 120px;
+}
+
+input {
+    display: block;
+    width: 250px;
+}
+
+input[type=submit] {
+    float: right;
+    border: 0;
+    background: #9999ff;
+    color: #fff;
+    width: 100px;
+    padding: 10px 15px; /* üst alt sol sağ */
+    font-weight: bold;
+}
+
+.mesaj {
+    display: block;
+    width: 300px;
+    height: 150px;
+    resize: none;
+}
+
+.kutumuz {
+    width: 420px;
+    margin: 0 auto;
+}
+
+.satir {
+    margin-bottom: 10px;
+}
+
+body {
+    background: #ffffff;
+    font-family: "Verdana", sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.kayit {
+    background: #a7d5ff;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+}
+
+.kayit:nth-of-type(2n) {
+    background: #9999ff;
+}
+
+span.label {
+    float: left;
+    display: block;
+}
+
+span.value {
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+

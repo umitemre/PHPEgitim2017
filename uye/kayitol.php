@@ -5,10 +5,16 @@
  * Date: 12.03.2017
  * Time: 14:22
  */
+
 require_once "../app.php";
 require_once "Kullanici.php";
 
 $kullanici = new Kullanici();
+session_start();
+
+if ($kullanici->girisYapildiMi() == true)
+    return print ("Zaten giriş yapılmış, kayıt olmaya gerek yoktur.");
+
 
 ?>
 

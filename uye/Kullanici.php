@@ -9,11 +9,17 @@
 class Kullanici
 {
 
+
     /*
      * Kullanıcının giriş yapıp yapmadığı bilgisini dönderen fonksiyon
      */
-    function girisYapildiMi() {
 
+    function girisYapildiMi() {
+        if(isset($_SESSION['isLogged']) && $_SESSION['isLogged'] == true) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -21,9 +27,38 @@ class Kullanici
      * sağlar. Bir sonuç kodu dönderir.
      * @param $username : kullanıcı adı
      * @param $password : şifre
+     * @return int
      */
     function girisYap($username, $password) {
+        global $pdo;
 
+        if (strlen($username) < 4 && strlen($username) > 15)
+            return 400;     // kullanıcı adı 4 ile 15 karakter arasında değil.
+
+        if (strlen($password) < 8)
+            return 401;     // parola 8 karakterden az olamaz.
+
+        $sql = $pdo->prepare("SELECT * FROM `kullanicilar` WHERE username = :username");
+        $sql->execute(array(
+            ":username" => $username
+        ));
+
+        // kullanıcı adı var mı yok mu kontrol et.
+        if ($sql->rowCount() == 0)
+            return 402;
+
+        $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+        // parola doğru olup olmadığını kontrol et.
+        if ($password != $data['password'])
+            return 402;
+
+        // giriş yapıldıktan sonra session bilgilerini değiştir.
+        $_SESSION['isLogged'] = true;
+        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $data['email'];
+
+        return 200;
     }
 
     /*
